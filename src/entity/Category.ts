@@ -5,7 +5,7 @@ import { Post } from "./Post";
 export class Category{
 
     @PrimaryGeneratedColumn()
-    id: string
+    id: number
 
     @OneToMany(
         ()=>Post,

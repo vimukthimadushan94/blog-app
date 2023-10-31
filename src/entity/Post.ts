@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, BaseEntity } from "typeorm"
 import { Category } from "./Category"
 
 @Entity()
-export class Post {
+export class Post extends BaseEntity{
 
     @PrimaryGeneratedColumn()
     id: number
@@ -18,9 +18,6 @@ export class Post {
 
     @Column()
     description: string
-
-    @Column()
-    age: number
 
     @CreateDateColumn()
     created_at: Date
