@@ -3,6 +3,7 @@ import { createExpressServer } from "routing-controllers"
 import { AppDataSource } from "./data-source"
 import { PostsController } from './controllers/PostsController';
 import { datasource } from './config/datasource';
+import { CategoryController } from './controllers/CategoryController';
 
 AppDataSource.initialize().then(async () => {
     console.log('Database Connected...')
@@ -13,7 +14,8 @@ AppDataSource.initialize().then(async () => {
 const app = createExpressServer({
     routePrefix:'/api',
     controllers: [
-        PostsController
+        PostsController,
+        CategoryController
     ]
 });
 

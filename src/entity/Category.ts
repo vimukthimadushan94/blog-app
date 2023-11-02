@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Post } from "./Post";
+import { IsNotEmpty, Length } from "class-validator";
 
 @Entity()
 export class Category{
@@ -14,6 +15,8 @@ export class Category{
     posts: Post[]
 
     @Column()
+    @Length(3)
+    @IsNotEmpty()
     name:string
 
 }

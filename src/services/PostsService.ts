@@ -5,6 +5,7 @@ import { json } from 'body-parser';
 import { Post } from '../entity/Post';
 import { Category } from '../entity/Category';
 import { CategoryRepository } from '../repository/CategoryRepository';
+import { validate } from 'class-validator';
 
 @Service()
 export class PostService{
