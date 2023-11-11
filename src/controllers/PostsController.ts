@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Request, Response } from "express";
-import { Body, Get, JsonController, Param, Post, Req, Res } from "routing-controllers";
+import { Body, Get, JsonController, Param, Post, Put, Req, Res } from "routing-controllers";
 import Container, { Inject, Service } from 'typedi';
 import { PostService } from '../services/PostsService';
 import { Post as BlogPost } from '../entity/Post';
@@ -37,6 +37,12 @@ export class PostsController{
     @Get('/posts/:id')
     async getPostById(@Param('id') id:number){
         const blogPost = await this.postService.getPostById(id)
+        return blogPost
+    }
+
+    @Put('/posts/:id')
+    async updatePost(@Param('id') id:number, @Body() post:BlogPost){
+        const blogPost = await this.postService.updatePost(id,post)
         return blogPost
     }
 }

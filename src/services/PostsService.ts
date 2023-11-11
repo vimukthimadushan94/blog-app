@@ -48,5 +48,17 @@ export class PostService{
         }
         return blogPost
     }
+
+    async updatePost(id, data){
+        const blogPost = await this.postRepo.findOneBy({id:id})
+        if(!blogPost){
+            return {error: 'Please add a valid post id'}
+        }
+
+        blogPost.title = data.title;
+        blogPost.description = data.description;
+        await this.postRepo.save(blogPost)
+        return blogPost
+    }
    
 }
