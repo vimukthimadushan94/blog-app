@@ -40,5 +40,13 @@ export class PostService{
         return false
         
     }
+
+    async getPostById(id){
+        const blogPost = await this.postRepo.findOneBy({id:id})
+        if(!blogPost){
+            return {error: 'Please add a valid post id'}
+        }
+        return blogPost
+    }
    
 }

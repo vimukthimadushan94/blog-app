@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Request, Response } from "express";
-import { Body, Get, JsonController, Post, Req, Res } from "routing-controllers";
+import { Body, Get, JsonController, Param, Post, Req, Res } from "routing-controllers";
 import Container, { Inject, Service } from 'typedi';
 import { PostService } from '../services/PostsService';
 import { Post as BlogPost } from '../entity/Post';
@@ -32,5 +32,11 @@ export class PostsController{
             return res.status(404).json({message:'Please enter valid category'})
         }
         
+    }
+
+    @Get('/posts/:id')
+    async getPostById(@Param('id') id:number){
+        const blogPost = await this.postService.getPostById(id)
+        return blogPost
     }
 }

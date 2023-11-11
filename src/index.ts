@@ -4,6 +4,7 @@ import { AppDataSource } from "./data-source"
 import { PostsController } from './controllers/PostsController';
 import { datasource } from './config/datasource';
 import { CategoryController } from './controllers/CategoryController';
+const cors = require('cors');
 
 AppDataSource.initialize().then(async () => {
     console.log('Database Connected...')
@@ -12,6 +13,7 @@ AppDataSource.initialize().then(async () => {
 
 
 const app = createExpressServer({
+    cors: true,
     routePrefix:'/api',
     controllers: [
         PostsController,
@@ -19,7 +21,8 @@ const app = createExpressServer({
     ]
 });
 
-app.listen(3000,() => {
+
+app.listen(8080,() => {
     console.log("Server is running on port 3000");
 });
 
