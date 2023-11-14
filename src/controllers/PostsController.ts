@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { Request, Response } from "express";
-import { Body, Get, JsonController, Param, Post, Put, Req, Res } from "routing-controllers";
+import { NextFunction, Request, Response } from "express";
+import { BadRequestError, Body, Get, JsonController, Param, Post, Put, Req, Res } from "routing-controllers";
 import Container, { Inject, Service } from 'typedi';
 import { PostService } from '../services/PostsService';
 import { Post as BlogPost } from '../entity/Post';
@@ -41,8 +41,14 @@ export class PostsController{
     }
 
     @Put('/posts/:id')
-    async updatePost(@Param('id') id:number, @Body() post:BlogPost){
-        const blogPost = await this.postService.updatePost(id,post)
-        return blogPost
+    async updatePost(@Param('id') id:number, @Body() post:BlogPost, next: NextFunction){
+        try{
+            const blogPost = await this.postService.updatePost(id,post)
+            return blogPost
+        }catch(err){
+            console.log("errrorrrrrr")
+            throw new Error("Something went rongs sonali");
+        }
+        
     }
 }

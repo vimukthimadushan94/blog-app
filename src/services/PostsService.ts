@@ -6,6 +6,8 @@ import { Post } from '../entity/Post';
 import { Category } from '../entity/Category';
 import { CategoryRepository } from '../repository/CategoryRepository';
 import { validate } from 'class-validator';
+import { NextFunction } from 'express';
+import { ErrorHandler } from '../middlewares/errors';
 
 @Service()
 export class PostService{
@@ -19,7 +21,11 @@ export class PostService{
 
     async getAllPosts() {
         console.log('testsestss')
-        const post =  await this.postRepo.find()
+        const post =  await this.postRepo.find({
+            relations: {
+                category: true
+            }
+        })
 
         return post
     }
@@ -41,18 +47,28 @@ export class PostService{
         
     }
 
-    async getPostById(id){
-        const blogPost = await this.postRepo.findOneBy({id:id})
-        if(!blogPost){
-            return {error: 'Please add a valid post id'}
+    async getPostById(id:number, next:NextFunction){
+        if(!id) {
+            throw new Error("Id is required!");
         }
-        return blogPost
+        try{
+            const blogPost = await this.postRepo.findOneBy({id:id})
+            if(!blogPost){
+                // return {error: 'Please add a valid post id'}
+                throw new Error('Please add a valid post id');
+            }
+            return blogPost
+
+        }catch(error){
+            throw new Error(error.message);
+        }
+        
     }
 
     async updatePost(id, data){
         const blogPost = await this.postRepo.findOneBy({id:id})
         if(!blogPost){
-            return {error: 'Please add a valid post id'}
+            throw new Error("Cannot find specific blog post")
         }
 
         blogPost.title = data.title;

@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, BaseEntity } from "typeorm"
 import { Category } from "./Category"
+import { MinLength } from "class-validator"
 
 @Entity()
 export class Post extends BaseEntity{
@@ -14,9 +15,15 @@ export class Post extends BaseEntity{
     category: Category
 
     @Column()
+    @MinLength(5,{
+        message: 'Title is too short'
+    })
     title: string
 
     @Column()
+    @MinLength(10,{
+        message: 'Description is too short'
+    })
     description: string
 
     @CreateDateColumn()

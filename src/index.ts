@@ -4,7 +4,7 @@ import { AppDataSource } from "./data-source"
 import { PostsController } from './controllers/PostsController';
 import { datasource } from './config/datasource';
 import { CategoryController } from './controllers/CategoryController';
-const cors = require('cors');
+import { ErrorHandler } from './middlewares/errors';
 
 AppDataSource.initialize().then(async () => {
     console.log('Database Connected...')
@@ -13,12 +13,16 @@ AppDataSource.initialize().then(async () => {
 
 
 const app = createExpressServer({
+    defaultErrorHandler:false,
     cors: true,
     routePrefix:'/api',
     controllers: [
         PostsController,
         CategoryController
-    ]
+    ],
+    middlewares:[
+        ErrorHandler
+    ],
 });
 
 
