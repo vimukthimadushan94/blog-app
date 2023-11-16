@@ -5,6 +5,9 @@ import { PostsController } from './controllers/PostsController';
 import { datasource } from './config/datasource';
 import { CategoryController } from './controllers/CategoryController';
 import { ErrorHandler } from './middlewares/errors';
+import { UserController } from './controllers/Auth/UserController';
+import { CheckAuth } from './middlewares/CheckAuth';
+import { LoginController } from './controllers/Auth/LoginController';
 
 AppDataSource.initialize().then(async () => {
     console.log('Database Connected...')
@@ -17,10 +20,13 @@ const app = createExpressServer({
     cors: true,
     routePrefix:'/api',
     controllers: [
+        UserController,
         PostsController,
-        CategoryController
+        CategoryController,
+        LoginController
     ],
     middlewares:[
+        CheckAuth,
         ErrorHandler
     ],
 });
