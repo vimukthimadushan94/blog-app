@@ -34,4 +34,15 @@ export class CategoryService{
             throw new Error(errors)
         }
     }
+
+    async deleteCategory(id){
+        try{
+            const category = await this.categoryRepo.findOneBy({id:id});
+            const response = await this.categoryRepo.delete(category);
+            return response;
+        }catch(errors){
+            throw new Error(errors)
+        }
+        
+    }
 }
